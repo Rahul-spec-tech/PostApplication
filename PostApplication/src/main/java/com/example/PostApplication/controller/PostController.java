@@ -1,4 +1,5 @@
 package com.example.PostApplication.controller;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.PostApplication.model.Post;
 import com.example.PostApplication.repository.PostRepository;
 
 @RestController
+@RequestMapping("/posts")
 public class PostController {
 	
 	@Autowired
@@ -24,6 +27,7 @@ public class PostController {
 	
 	@PostMapping("/addBlog")
 	public ResponseEntity<Post> addBlogPost(@RequestBody Post post){
+		post.setCreatedAt(LocalDateTime.now());
 		Post blogData=postRepo.save(post);
 		return new ResponseEntity<>(blogData,HttpStatus.OK);
 	}
