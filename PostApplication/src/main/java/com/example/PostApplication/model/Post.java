@@ -1,69 +1,87 @@
 package com.example.PostApplication.model;
 
 import java.time.LocalDateTime;
+import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.*;
-
+import java.util.UUID;
 @Entity
-@Table(name="posts")
+@Table(name = "posts")
 public class Post {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
-	private String Title;
-	private String Content;
-	@Column(name="Created_At",updatable=false)
-	private LocalDateTime CreatedAt;
-	@Column(name="Update_At")
-	private LocalDateTime UpdatedAt;
-	@PrePersist
-	protected void onCreate() {
-		CreatedAt=LocalDateTime.now();
-	}
-	@PreUpdate
-	protected void onUpdate() {
-		UpdatedAt=LocalDateTime.now();
-	}
-	public Post() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Post(Long id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		super();
-		this.Id = id;
-		this.Title = title;
-		this.Content = content;
-		this.CreatedAt = createdAt;
-		this.UpdatedAt = updatedAt;
-	}
-	public Long getId() {
-		return Id;
-	}
-	public void setId(Long id) {
-		this.Id = id;
-	}
-	public String getTitle() {
-		return Title;
-	}
-	public void setTitle(String title) {
-		this.Title = title;
-	}
-	public String getContent() {
-		return Content;
-	}
-	public void setContent(String content) {
-		this.Content = content;
-	}
-	public LocalDateTime getCreatedAt() {
-		return CreatedAt;
-	}
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.CreatedAt = createdAt;
-	}
-	public LocalDateTime getUpdatedAt() {
-		return UpdatedAt;
-	}
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.UpdatedAt = updatedAt;
-	}
+    @Id
+    @UuidGenerator
+    @Column(updatable = false, nullable = false)
+    private UUID id; 
+    private String title; 
+    private String content; 
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
+    public Post() {
+        super();
+    }
+
+    public Post(UUID id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
